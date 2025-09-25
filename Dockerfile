@@ -1,4 +1,4 @@
-FROM php:8.3-cli
+FROM php:8.4-cli
 
 ENV LANG=ja_JP.UTF-8 \
     LANGUAGE=ja_JP:ja \
@@ -29,4 +29,4 @@ RUN chmod +x markblog
 
 RUN echo "alias phpunit='vendor/bin/phpunit'" >> /root/.bashrc
 
-CMD ["php", "markblog", "serve", "--port", "8080"]
+CMD ["php", "markblog", "serve"]

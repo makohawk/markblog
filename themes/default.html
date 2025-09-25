@@ -2,17 +2,55 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>{{title}}</title>
 </head>
-<body>
-    <header>
-        <h1>{{title}}</h1>
+<body class="bg-gray-50 text-gray-900 font-sans">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-md">
+        <div class="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">{{title}}</h1>
+        </div>
     </header>
-    <main>
-        {{content}}
+
+    <main class="max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <article class="bg-white shadow-xl rounded-2xl p-10">
+            <!-- Meta Info -->
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8">
+                <div class="text-gray-500 text-sm">
+                    <span class="font-semibold">Published:</span> {{date}}
+                </div>
+                <div class="flex flex-wrap gap-2 mt-3 sm:mt-0">
+                    {% for category in categories %}
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">{{ category }}</span>
+                    {% endfor %}
+                    {% for tag in tags %}
+                        <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Article Content -->
+            <div class="prose prose-indigo max-w-none">
+                {{ content|raw }}
+            </div>
+        </article>
+
+        <!-- Comments / Extra Section Placeholder -->
+        <section class="mt-12 bg-gray-50 rounded-xl p-6 shadow-inner">
+            <h2 class="text-2xl font-bold mb-4">Comments</h2>
+            <p class="text-gray-500 italic">Comments feature coming soon...</p>
+        </section>
     </main>
-    <footer>
-        <p>MarkBlog v0.1</p>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 mt-16 py-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600">
+            <p>&copy; 2025 MarkBlog v0.1</p>
+        </div>
     </footer>
+
 </body>
 </html>

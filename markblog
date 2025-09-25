@@ -1,36 +1,23 @@
 #!/usr/bin/env php
 <?php
 
-// CLI実行ファイル
+declare(strict_types=1);
 
-require __DIR__ . '/vendor/autoload.php';
-
+use Symfony\Component\Console\Application;
 use CLI\NewCommand;
 use CLI\BuildCommand;
 use CLI\ServeCommand;
 use CLI\DeployCommand;
 
-$args = $argv;
-array_shift($args);
+require_once __DIR__ . '/vendor/autoload.php';
 
-$command = $args[0] ?? null;
+$application = new Application('MarkBlog CLI', '0.1.0');
 
-switch ($command) {
-    case 'new':
-        $title = $args[1] ?? 'untitled';
-        (new NewCommand())->execute($title);
-        break;
-    // case 'build':
-    //     (new BuildCommand())->execute();
-    //     break;
-    case 'serve':
-        $port = $args[1] ?? 8080;
-        (new ServeCommand())->execute((int)$port);
-        break;
-    // case 'deploy':
-    //     (new DeployCommand())->execute();
-    //     break;
-    default:
-        echo "Usage: markblog [new | build | serve | deploy] [options]\n";
-        break;
-}
+// コマンド登録
+$application->add(new NewCommand());
+$application->add(new BuildCommand());
+$application->add(new ServeCommand());
+// $application->add(new DeployCommand());
+
+// Symfony Console が自動で $argv を処理
+$application->run();
