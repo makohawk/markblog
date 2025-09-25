@@ -7,6 +7,8 @@ namespace Tests\CLI;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use CLI\NewCommand;
+use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Application;
 
 class NewCommandTest extends TestCase
 {
@@ -48,9 +50,17 @@ class NewCommandTest extends TestCase
     public function createsNewPostFile(): void
     {
         $command = new NewCommand($this->tempPostsDir);
+        $application = new Application();
+        $application->add($command);
+
+        $commandTester = new CommandTester($application->find('new'));
         $title = 'My Awesome Post';
 
-        $command->execute($title);
+        $commandTester->execute([
+            'title' => $title,
+            '-c' => ['Tech', 'PHP'],
+            '-t' => ['Example', 'MarkBlog']
+        ]);
 
         $expectedSlug = 'my-awesome-post';
         $expectedFilename = date('Y-m-d') . '-' . $expectedSlug . '.md';
@@ -61,6 +71,11 @@ class NewCommandTest extends TestCase
         $fileContent = file_get_contents($expectedFilePath);
         $this->assertStringContainsString("title: {$title}", $fileContent);
         $this->assertStringContainsString("date: " . date('Y-m-d'), $fileContent);
+        $this->assertStringContainsString("categories: [Tech, PHP]", $fileContent);
+        $this->assertStringContainsString("tags: [Example, MarkBlog]", $fileContent);
+
+        // 出力にも成功メッセージが含まれる
+        $this->assertStringContainsString('New post created:', $commandTester->getDisplay());
     }
 
     /**
@@ -76,10 +91,18 @@ class NewCommandTest extends TestCase
         file_put_contents($filePath, $originalContent);
 
         $command = new NewCommand($this->tempPostsDir);
+        $application = new Application();
+        $application->add($command);
+        $commandTester = new CommandTester($application->find('new'));
 
-        $this->expectOutputString("File already exists: {$filePath}\n");
-        $command->execute($title);
+        $commandTester->execute([
+            'title' => $title
+        ]);
 
+        // 元の内容が上書きされていない
         $this->assertStringEqualsFile($filePath, $originalContent);
+
+        // 出力にエラーが含まれる
+        $this->assertStringContainsString('File already exists:', $commandTester->getDisplay());
     }
 }
