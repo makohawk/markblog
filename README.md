@@ -4,7 +4,7 @@
 シンプルなCLIツールとして、**未経験や学習中のエンジニア**がブログ記事の作成、ビルド、そしてプレビューまでの一連の流れを体験できるよう設計しています。
 
 <a href="https://github.com/makohawk/markblog/actions/workflows/test.yml"><img src="https://github.com/makohawk/markblog/actions/workflows/test.yml/badge.svg" alt="CI Status Badge"></a>
-   <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-8.3+-777BB4" alt="PHP 8.3.25"></a>
+   <a href="https://php.net"><img src="https://img.shields.io/badge/PHP-8.4+-777BB4" alt="PHP 8.4.12"></a>
 
 ## 🎯 プロジェクトの目的
 
