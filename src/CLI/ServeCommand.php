@@ -48,7 +48,7 @@ final class ServeCommand extends Command
 
         $webroot = __DIR__ . '/../../dist';
 
-        // distディレクトリが存在しない場合はエラー
+        // distディレクトリが存在しない場合はエラーを返す
         if (!is_dir($webroot)) {
             $output->writeln("<error>Web root directory '{$webroot}' not found. Build the site first.</error>");
             return Command::FAILURE;
