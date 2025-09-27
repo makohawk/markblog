@@ -1,5 +1,5 @@
 {
-    "name": "username/markblog",
+    "name": "makohawk/markblog",
     "require": {
         "php": "^8.4",
         "league/commonmark": "^2.7.1",
